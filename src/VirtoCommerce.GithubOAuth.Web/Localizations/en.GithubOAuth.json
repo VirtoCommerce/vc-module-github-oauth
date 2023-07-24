@@ -1,0 +1,28 @@
+{
+  "GithubOAuth": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "GithubOAuth:access": "Open GithubOAuth menu",
+    "GithubOAuth:create": "Create GithubOAuth related data",
+    "GithubOAuth:read": "View GithubOAuth related data",
+    "GithubOAuth:update": "Update GithubOAuth related data",
+    "GithubOAuth:delete": "Delete GithubOAuth related data"
+  },
+  "settings": {
+    "GithubOAuth": {
+      "GithubOAuthEnabled": {
+        "title": "GithubOAuth Enabled",
+        "description": "GithubOAuth Enabled setting"
+      },
+      "GithubOAuthPassword": {
+        "title": "GithubOAuth Password",
+        "description": "GithubOAuth Password setting"
+      }
+    }
+  }
+}

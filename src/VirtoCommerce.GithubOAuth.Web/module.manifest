@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <id>VirtoCommerce.GithubOAuth</id>
+  <version>3.200.0</version>
+  <version-tag></version-tag>
+
+  <platformVersion>3.293.8</platformVersion>
+  <dependencies>
+    <!--<dependency id="VirtoCommerce.Core" version="3.200.4" />-->
+  </dependencies>
+
+  <title>VirtoCommerce GithubOAuth module</title>
+  <description>VirtoCommerce GithubOAuth module</description>
+
+  <authors>
+    <author>Aleksandr Morogov</author>
+  </authors>
+  <owners>
+    <owner>VirtoCommerce</owner>
+  </owners>
+
+  <projectUrl>https://github.com/VirtoCommerce/vc-module-github-oauth</projectUrl>
+  <iconUrl>Modules/$(VirtoCommerce.GithubOAuth)/Content/logo.png</iconUrl>
+  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+  <assemblyFile>VirtoCommerce.GithubOAuth.Web.dll</assemblyFile>
+  <moduleType>VirtoCommerce.GithubOAuth.Web.Module, VirtoCommerce.GithubOAuth.Web</moduleType>
+
+  <releaseNotes>First version.</releaseNotes>
+  <copyright>Copyright © 2023 VirtoCommerce. All rights reserved</copyright>
+  <tags>extension module</tags>
+  <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
+</module>
