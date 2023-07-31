@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using VirtoCommerce.GithubOAuth.Core.Models;
 using VirtoCommerce.GithubOAuth.Data.Services;
+using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
 using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Security.ExternalSignIn;
@@ -46,7 +47,7 @@ namespace VirtoCommerce.GithubOAuth.Web
                 {
                     githubOptions.ClientId = options.ClientId;
                     githubOptions.ClientSecret = options.ClientSecret;
-                    githubOptions.Scope.Add("user:email");
+                    githubOptions.Scope.AddRange(options.Scopes);
                 });
 
                 // register Google external provider implementation

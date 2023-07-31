@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.GitHub" Version="6.0.15" />
-    <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.293.8" />
+    <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.318.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.GithubOAuth.Core\VirtoCommerce.GithubOAuth.Core.csproj" />

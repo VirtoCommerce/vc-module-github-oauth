@@ -13,8 +13,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.13" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.293.8" />
-    <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.293.8" />
+    <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.318.0" />
+    <PackageReference Include="VirtoCommerce.Platform.Security" Version="3.318.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VirtoCommerce.GithubOAuth.Core\VirtoCommerce.GithubOAuth.Core.csproj" />

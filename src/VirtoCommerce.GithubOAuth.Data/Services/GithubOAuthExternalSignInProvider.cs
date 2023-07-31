@@ -30,5 +30,10 @@ namespace VirtoCommerce.GithubOAuth.Data.Services
         {
             return _options.DefaultUserType;
         }
+
+        public string[] GetUserRoles()
+        {
+            return _options.DefaultUserRoles;
+        }
     }
 }
