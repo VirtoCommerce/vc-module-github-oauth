@@ -18,27 +18,14 @@ namespace VirtoCommerce.GithubOAuth.Web
 
         public void Initialize(IServiceCollection serviceCollection)
         {
-            // Initialize database
-            //var connectionString = Configuration.GetConnectionString(ModuleInfo.Id) ??
-            //                       Configuration.GetConnectionString("VirtoCommerce");
+            // add options
+            var optionsSection = Configuration.GetSection("GithubOAuth");
+            var options = optionsSection.Get<GithubOAuthOptions>();
+            optionsSection.Bind(options);
+            serviceCollection.AddOptions<GithubOAuthOptions>().Bind(optionsSection).ValidateDataAnnotations();
 
-            //serviceCollection.AddDbContext<GithubOAuth>(options => options.UseSqlServer(connectionString));
-
-            // Override models
-            //AbstractTypeFactory<OriginalModel>.OverrideType<OriginalModel, ExtendedModel>().MapToType<ExtendedEntity>();
-            //AbstractTypeFactory<OriginalEntity>.OverrideType<OriginalEntity, ExtendedEntity>();
-
-            // Register services
-            //serviceCollection.AddTransient<IMyService, MyService>();
-
-            var GithubOAuthEnabled = Configuration.GetValue<bool>("GithubOAuth:Enabled");
-            if (GithubOAuthEnabled)
+            if (options.Enabled)
             {
-                // add options
-                var optionsSection = Configuration.GetSection("GithubOAuth");
-                var options = new GithubOAuthOptions();
-                optionsSection.Bind(options);
-                serviceCollection.Configure<GithubOAuthOptions>(optionsSection);
 
                 // add app builder google sso
                 var authBuilder = new AuthenticationBuilder(serviceCollection);
@@ -65,20 +52,8 @@ namespace VirtoCommerce.GithubOAuth.Web
         {
             var serviceProvider = appBuilder.ApplicationServices;
 
-            // Register settings
-            //var settingsRegistrar = serviceProvider.GetRequiredService<ISettingsRegistrar>();
-            //settingsRegistrar.RegisterSettings(ModuleConstants.Settings.AllSettings, ModuleInfo.Id);
-
-            // Register permissions
-            //var permissionsRegistrar = serviceProvider.GetRequiredService<IPermissionsRegistrar>();
-            //permissionsRegistrar.RegisterPermissions(ModuleConstants.Security.Permissions.AllPermissions
-            //    .Select(x => new Permission { ModuleId = ModuleInfo.Id, GroupName = "GithubOAuth", Name = x })
-            //    .ToArray());
-
             // Apply migrations
             using var serviceScope = serviceProvider.CreateScope();
-            //using var dbContext = serviceScope.ServiceProvider.GetRequiredService<GithubOAuth>();
-            //dbContext.Database.Migrate();
         }
 
         public void Uninstall()
