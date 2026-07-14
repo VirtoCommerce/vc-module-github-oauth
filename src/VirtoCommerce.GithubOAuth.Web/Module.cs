@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,6 @@ using VirtoCommerce.GithubOAuth.Core.Models;
 using VirtoCommerce.GithubOAuth.Data.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Modularity;
-using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Security.ExternalSignIn;
 
 namespace VirtoCommerce.GithubOAuth.Web
@@ -18,34 +18,42 @@ namespace VirtoCommerce.GithubOAuth.Web
 
         public void Initialize(IServiceCollection serviceCollection)
         {
-            // add options
-            var optionsSection = Configuration.GetSection("GithubOAuth");
-            var options = optionsSection.Get<GithubOAuthOptions>();
-            optionsSection.Bind(options);
+            var optionsSection = Configuration.GetSection(GithubOAuthOptions.SectionName);
             serviceCollection.AddOptions<GithubOAuthOptions>().Bind(optionsSection).ValidateDataAnnotations();
 
-            if (options.Enabled)
+            var options = optionsSection.Get<GithubOAuthOptions>() ?? new GithubOAuthOptions();
+
+            if (!options.Enabled)
             {
-
-                // add app builder google sso
-                var authBuilder = new AuthenticationBuilder(serviceCollection);
-
-                authBuilder.AddGitHub(githubOptions =>
-                {
-                    githubOptions.ClientId = options.ClientId;
-                    githubOptions.ClientSecret = options.ClientSecret;
-                    githubOptions.Scope.AddRange(options.Scopes);
-                });
-
-                // register Google external provider implementation
-                serviceCollection.AddSingleton<GithubOAuthExternalSignInProvider>();
-                serviceCollection.AddSingleton(provider => new ExternalSignInProviderConfiguration
-                {
-
-                    AuthenticationType = options.AuthenticationType,
-                    Provider = provider.GetService<GithubOAuthExternalSignInProvider>(),
-                });
+                return;
             }
+
+            var authBuilder = new AuthenticationBuilder(serviceCollection);
+
+            authBuilder.AddGitHub(options.AuthenticationType, githubOptions =>
+            {
+                githubOptions.ClientId = options.ClientId;
+                githubOptions.ClientSecret = options.ClientSecret;
+
+                if (!string.IsNullOrEmpty(options.RedirectUrl))
+                {
+                    githubOptions.CallbackPath = Uri.TryCreate(options.RedirectUrl, UriKind.Absolute, out var redirectUri)
+                        ? redirectUri.AbsolutePath
+                        : options.RedirectUrl;
+                }
+
+                if (options.Scopes != null)
+                {
+                    githubOptions.Scope.AddRange(options.Scopes);
+                }
+            });
+
+            serviceCollection.AddSingleton<GithubOAuthExternalSignInProvider>();
+            serviceCollection.AddSingleton(provider => new ExternalSignInProviderConfiguration
+            {
+                AuthenticationType = options.AuthenticationType,
+                Provider = provider.GetRequiredService<GithubOAuthExternalSignInProvider>(),
+            });
         }
 
         public void PostInitialize(IApplicationBuilder appBuilder)
